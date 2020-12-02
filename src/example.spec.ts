@@ -55,7 +55,7 @@ describe('FriendsList', () => {
     })
 
     it('throws an error if friend not found', () => {
-      expect(() => friendsList.removeFriend('Sam')).toThrow(new Error('Friend not found')
+      expect(() => friendsList.removeFriend('Sam')).toThrow(new Error('Friend not found'));
     })
   })
 });
