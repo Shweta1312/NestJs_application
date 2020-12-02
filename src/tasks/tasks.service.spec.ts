@@ -3,12 +3,14 @@ import { TasksService } from './tasks.service';
 import { TaskRepository } from './task.repository';
 import { GetTasksFilterDTo } from './dto/get-tasks-filter.dto';
 import { TaskStatus } from './task-status.enum';
+import { CreateTaskDTo } from './dto/create-task.dto';
 
 const mockUser = { id: 12, username: 'Test user' };
 
 const mockTaskRepository = () => ({
   getTasks: jest.fn(),
   findOne: jest.fn(),
+  createTask: jest.fn(),
 });
 
 describe('TasksService', () => {
@@ -64,4 +66,18 @@ describe('TasksService', () => {
       expect(tasksService.getTaskById(1, mockUser)).rejects.toThrow();
     });
   });
+
+  describe('createTask', () => {
+    it('creates task by calling the taskRepository.createTask()', async () => {
+
+      taskRepository.createTask.mockResolvedValue('Some value');
+      const taskDto: CreateTaskDTo = {
+        title: 'Test title',
+        description: 'Test description'
+      }
+      const result = await tasksService.createTask(taskDto,mockUser);
+      expect(taskRepository.createTask).toHaveBeenCalled();
+      expect(result).toEqual('Some value');
+    })
+  })
 });
